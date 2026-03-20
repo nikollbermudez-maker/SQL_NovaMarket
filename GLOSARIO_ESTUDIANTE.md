@@ -28,9 +28,14 @@ Es un **Guion (Script)**. Es una lista de instrucciones que ya escribiste en un 
 | `sqlite3 archivo.db` | Terminal | Abre la base de datos y activa el motor. |
 | `.tables` | Punto | Muestra un índice de todas las tablas en la base de datos. |
 | `.schema Tabla` | Punto | Te enseña "cómo fue construida" la tabla (sus columnas). |
+| `.headers on` | Punto | **¡Crucial!** Muestra los nombres de las columnas arriba del resultado. |
+| `.mode box` | Punto | Dibuja una caja con bordes bonitos alrededor de tus datos (Estilo Pro). |
+| `.shell clear` | Punto | Pide a la computadora que limpie la terminal por completo. |
+| `Cmd + K` | Atajo Mac | El secreto rápido para limpiar la terminal en VS Code. |
 | `.exit` | Punto | Cierra la conexión y vuelve a la terminal normal de Mac. |
 | `SELECT ...;` | SQL | La pregunta mágica. Sirve para extraer datos específicos. |
 | `PRAGMA ...;` | SQL | Comandos especiales de SQLite para consultar metadatos técnicos. |
+| `.echo on` | Punto | Repite tu comando SQL antes de dar el resultado (Para no perderse). |
 
 ---
 
@@ -54,3 +59,30 @@ Es como hacerle una "radiografía" a una tabla. Nos dice:
 
 > [!TIP]
 > **Para el estudiante:** Aprende primero en la terminal para entender la lógica, y luego usa las extensiones para aumentar tu productividad.
+
+---
+
+## 5. Git y GitHub: El Guardado de Partida (Backups)
+
+Imagina que Git es como el **"Guardado"** de un videojuego. Para esta actualización, seguimos estos pasos exactos para que tus cambios suban a Internet:
+
+1.  `git status` **(La Inspección):**
+    *   *Qué hace:* Nos dice qué archivos modificamos (aparecen en rojo). Es como preguntar: "¿Qué ha cambiado desde la última vez?".
+
+2.  `git add .` **(La Maleta):**
+    *   *Qué hace:* Prepara todos los cambios (`.`) para ser guardados. Imagina que estás empacando la maleta antes de un viaje.
+
+3.  `git commit -m "mensaje"` **(La Etiqueta):**
+    *   *Qué hace:* Crea un "Checkpoint" o punto de guardado oficial con una nota descriptiva. Es donde decimos oficialmente: "Esto es lo que hice".
+
+4.  `git push origin main` **(El Lanzamiento):**
+    *   *Qué hace:* Envía tus cambios desde tu computadora local hacia los servidores de **GitHub** en la nube. ¡Ahora tus cambios son visibles para el mundo!
+
+---
+
+## ¿Por qué lo hicimos así?
+
+Para la actualización de los archivos SQL que me pediste, usamos este flujo porque garantiza que:
+1. No perdamos el progreso.
+2. Podamos volver atrás si algo falla.
+3. Tengas una copia segura en GitHub de todo tu aprendizaje.
