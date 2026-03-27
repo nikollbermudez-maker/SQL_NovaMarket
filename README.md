@@ -1,60 +1,49 @@
-# 📓 Laboratorio de SQL: NovaMarket Tech (v3)
+# 🎓 Curso SQL: NovaMarket Tech (v3)
 
-¡Bienvenidos al "Interrogatorio" de datos! En este espacio usaremos **SQL** para descubrir por qué NovaMarket está perdiendo dinero a pesar de vender récords.
-
----
-
-## 🛠️ Guía Rápida: Cómo usar este espacio
-
-Tienes dos formas de trabajar: la **Terminal** (rápida y técnica) y las **Extensiones** (visual y cómoda).
-
-### 1. El Camino del Guerrero (Terminal)
-Es la forma más directa de hablar con la base de datos. 
-
-*   **¿Dónde ejecuto esto?** En la pestaña "Terminal" de VS Code (asegúrate de que estás en la carpeta `/SQL`).
-*   **Comando para entrar:** 
-    ```bash
-    sqlite3 novamarket_v3.db
-    ```
-    *(Esto "despierta" al motor de SQLite y le dice que trabaje sobre ese archivo).*
-
-*   **Reglas de Oro en la Terminal:**
-    1.  **Comandos de Punto (Internos):** Empiezan con punto y **no** llevan punto y coma.
-        *   `.tables`: Muestra qué tablas existen.
-        *   `.schema NombreTabla`: Muestra la estructura de esa tabla.
-        *   `.exit` o `.quit`: Salir de la base de datos.
-    2.  **Sentencias SQL:** **SIEMPRE terminan en punto y coma (`;`)**.
-        *   `SELECT * FROM FactVentas;`
-        *   *Si olvidas el `;`, la terminal te mostrará `...>` esperando a que lo pongas.*
+¡Bienvenido al laboratorio de datos de NovaMarket! Este repositorio está organizado para que aprendas SQL siguiendo pasos lógicos en cada sesión.
 
 ---
 
-### 2. El Camino del Maestro (Extensiones Visuales)
-Esto es lo que viste en tu pantallazo. Aquí está el paso a paso para configurarlo:
+# 🎓 Curso SQL: NovaMarket Tech (v3)
 
-#### Configurar SQLTools (Para ejecutar líneas con Cmd+E)
-1.  Haz clic en el icono de **SQLTools** en la barra lateral izquierda (parece un cilindro de base de datos).
-2.  Haz clic en el botón **"+" (Add Connection)** en la sección de Connections.
-3.  Selecciona el proveedor: **SQLite**. 
-    *   *(Si no aparece, instala la extensión "SQLTools SQLite/Bun/DuckDB Driver").*
-4.  En **Connection Name**, escribe: `NovaMarket`.
-5.  En **Database File**, haz clic en "Select from file" y busca el archivo `novamarket_v3.db` en tu carpeta.
-6.  Haz clic en **Save Connection** y luego en **Connect**.
-7.  **Ahora sí:** Ya puedes ir a tus archivos `.sql`, seleccionar una línea y presionar `Cmd+E` para ver los resultados en una ventana interactiva.
-
-#### Configurar SQLite Viewer (Estilo Excel)
-*   **¿Para qué sirve?** Ver la tabla completa de forma gráfica sin escribir código.
-*   **¿Cómo se usa?** Haz clic derecho en el archivo `novamarket_v3.db` en el explorador de archivos -> **Open With...** -> **SQLite Viewer**.
+¡Bienvenido al laboratorio de datos de NovaMarket! Este repositorio está organizado para que aprendas SQL siguiendo pasos lógicos en cada sesión.
 
 ---
 
-## 📂 Estructura del Aprendizaje
-- `novamarket_v3.db`: El "cerebro" donde viven los datos.
-- `S06_El_Contrato/`: Integridad y reglas (Sesión actual).
-- `S07_El_Interrogatorio/`: Consultas precisas.
-- `S08_El_Arte_Resumir/`: Agregaciones (Confirmando por qué perdemos dinero).
-- `S09_El_Puente/`: JOINs (Uniendo datos de varias tablas).
+## 🚀 Guía Rápida: Empieza Aquí
+Si es tu primera vez o necesitas configurar tu entorno, lee la **[Guía de Configuración del Entorno](file:///Users/macbookpro/Developer/Learning/SQL/GUIA_CONFIGURACION_ENTORNO.md)**.
+
+---
+
+## 📂 Organización del Curso
+
+### 📘 Sesiones y Prácticas
+Sigue el orden numérico para avanzar en el curso:
+
+#### 00. [Fundamentos](file:///Users/macbookpro/Developer/Learning/SQL/00_Fundamentos)
+- [01_Glosario_Conceptos_SQL](file:///Users/macbookpro/Developer/Learning/SQL/00_Fundamentos/01_Glosario_Conceptos_SQL.md)
+- [02_Guia_Configuracion_Antigravity](file:///Users/macbookpro/Developer/Learning/SQL/00_Fundamentos/02_Guia_Configuracion_Antigravity.md)
+
+#### 01. [Sesión 6: El Contrato](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06)
+- **[S06_GuiaEstudiante_Antigravity](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/S06_GuiaEstudiante_Antigravity.md)**: Guía paso a paso.
+- **[S06_Practica_NovaMarket](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/S06_Practica_NovaMarket.sql)**: Práctica para estudiantes.
+- [03_Solucion_S06](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/03_Solucion_S06.sql): Código de referencia.
+- [04_Puente_Hacia_S07](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/04_Puente_Hacia_S07.md): Próximos pasos.
+
+#### 02. [Sesión 7: El Interrogatorio](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07)
+- **[01_Guia_S07](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/01_Guia_S07.md)**: Guía completa de la sesión.
+- **[S07_NovaMarket_Consultas](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/S07_NovaMarket_Consultas.sql)**: Consultas para resolver.
+- **[novamarket_s07.db](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/novamarket_s07.db)**: Base de datos cargada (500 filas).
+- [02_Laboratorio_S07](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/02_Laboratorio_S07.sql): Hoja de trabajo.
+- [03_Solucion_S07](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/03_Solucion_S07.sql): Consultas resueltas.
+- [05_Script_Carga_DB_S07](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/05_Script_Carga_DB_S07.sql): Script de respaldo.
+
+---
+
+## 🛠️ Herramientas
+- **Editor:** VS Code con **Antigravity** y **SQLTools**.
+- **Base de Datos:** SQLite (archivos `.db`).
 
 ---
 > [!TIP]
-> **Consejo:** Empieza usando la terminal para los comandos simples (`.tables`) y usa **SQLTools** (Cmd+E) para las consultas largas que estás escribiendo en los archivos `.sql`.
+> **Pasos recomendados:** Lee la Guía (01), trabaja en tu Laboratorio (02) y solo si te bloqueas consulta la Solución (03).

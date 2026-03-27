@@ -1,0 +1,16 @@
+-- 💻 LABORATORIO SESIÓN 7: EL INTERROGATORIO
+-- Escribe aquí tus consultas SELECT, WHERE y ORDER BY.
+
+-- Bloque A: Exploración Inicial...
+
+
+-- Bloque B: Columnas y Cálculos...
+
+
+-- Bloque C: Filtros (WHERE)...
+
+
+-- Bloque D: Orden y Límites...
+
+
+-- Bloque E: Desafíos Autónomos...

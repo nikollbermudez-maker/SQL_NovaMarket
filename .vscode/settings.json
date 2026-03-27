@@ -5,6 +5,12 @@
             "driver": "SQLite",
             "name": "NovaMarket",
             "database": "${workspaceFolder:SQL}/novamarket_v3.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:SQL}/novamarket_prueba.db",
+            "name": "Novamarket_Prueba"
         }
     ],
     "sqltools.useNodeRuntime": true
