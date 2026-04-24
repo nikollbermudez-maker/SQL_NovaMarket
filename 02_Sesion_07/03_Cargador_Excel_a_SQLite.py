@@ -5,7 +5,7 @@ import os
 # ⚙️ CONFIGURACIÓN INICIAL
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXCEL_FILE = os.path.join(BASE_DIR, '04_Ventas_Datos_Limpios_S03.xlsx')
-DATABASE_FILE = os.path.join(BASE_DIR, 'Novamarket_S07.db')
+DATABASE_FILE = os.path.join(BASE_DIR, 'Novamarket_S07_Camila.db')
 
 def cargar_y_modelar():
     print(f"Iniciando carga desde: {EXCEL_FILE}...")
