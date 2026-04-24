@@ -23,6 +23,12 @@
             "driver": "SQLite",
             "name": "conexion2",
             "database": "${workspaceFolder:SQL}/02_Sesion_07/Novamarket_S07.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "conexionviernes",
+            "database": "${workspaceFolder:SQL}/01_Sesion_06/basedatoss6ejemplo.db"
         }
     ],
     "sqltools.useNodeRuntime": true
