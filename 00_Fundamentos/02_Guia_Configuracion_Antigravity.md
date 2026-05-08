@@ -20,6 +20,8 @@ Esta guía te permitirá configurar tu entorno profesional de análisis de datos
     git config --global user.name "Tu Nombre Real"
     git config --global user.email "tu@email.com"
     ```
+    > **💡 ¿Qué significa `--global`?**
+    > Es como firmar tu carnet de identidad. Al ponerlo global, le dices a tu computadora que **todos** los proyectos que hagas de aquí en adelante llevarán tu firma automáticamente. Solo lo haces una vez.
 
 ---
 
@@ -30,6 +32,9 @@ Esta guía te permitirá configurar tu entorno profesional de análisis de datos
 | **¿Qué?** | Instalar Python y las librerías de datos (`pandas`, `openpyxl`). |
 | **¿Cuándo?** | **Una sola vez** antes de ejecutar scripts `.py`. |
 | **¿Por qué?** | Python es el motor que transforma archivos Excel en bases de datos `.db`. |
+
+> **💡 En otras palabras:**
+> Python es el "traductor". Toma los datos que están en Excel (que SQL no puede leer directamente) y los traduce al formato de base de datos `.db` que usaremos en clase.
 
 **Instrucción:**
 1.  **Descargar:** Baja el instalador de la web oficial.
@@ -176,6 +181,11 @@ git commit -m "Solución Sesión 07 terminada"
 git push origin main
 ```
 
+> **💡 El "Truco de la Caja" para recordar Git:**
+> 1.  **`git add .`** (Empacar): Metes todos tus cambios dentro de una caja de mudanza.
+> 2.  **`git commit`** (Etiquetar): Le pegas un post-it a la caja diciendo qué hay dentro (ej: "Tarea lista").
+> 3.  **`git push`** (Enviar): Subes la caja al camión para enviarla a GitHub. ¡Si no haces este paso, la caja se queda en tu casa y el profesor no puede verla!
+
 ---
 
 ## Paso 8: Entrega y Calificación 📤
@@ -184,13 +194,14 @@ git push origin main
 | **¿Dónde?** | En el navegador (Tu perfil de GitHub). |
 | **¿Qué?** | Copiar la URL HTTPS de tu repositorio. |
 | **¿Cuando?** | Una sola vez para registrar tu trabajo con el profesor. |
-| **¿Por qué?** | Para que el profesor pueda entrar a tu código y calificarlo. |
+| **¿Por qué?** | Para que el profesor pueda calificar tu código automáticamente con Antigravity de forma rápida. |
 
 **Instrucción:**
 1.  Entra a GitHub y busca tu repositorio `SQL_NovaMarket`.
-2.  Copia la URL de la barra de direcciones (ej: `https://github.com/TuUsuario/SQL_NovaMarket`).
-3.  **Verificación:** Asegúrate de que el enlace tenga TU nombre de usuario y no el del profesor (`edwardzd`).
-4.  Entrega el link por el medio que se te indique (Classroom, chat, etc.).
+2.  **Enlace Directo (Vía Rápida):** No entregues solo el link del perfil. Entra a la carpeta de la sesión (ej: `02_Sesion_07`) y haz clic en tu archivo de laboratorio (ej: `06_Laboratorio_Consultas.sql`).
+3.  **Copia la URL** de la barra de direcciones (ej: `https://github.com/TuUsuario/SQL_NovaMarket/blob/main/02_Sesion_07/06_Laboratorio_Consultas.sql`).
+4.  **Verificación:** Asegúrate de que el enlace tenga TU nombre de usuario y no el del profesor (`edwardzd`).
+5.  Entrega el link por el medio que se te indique (Classroom, chat, etc.).
 
 ---
 
@@ -241,4 +252,35 @@ Si sientes que tu carpeta se desordenó o algo dejó de funcionar, puedes borrar
 5.  **Git es Entregable:** Si no haces `push`, el profesor no puede ver tus respuestas.
 
 ---
-*Sesión 07 | NovaMarket Tech | Configuración con Antigravity*
+
+## Paso 9: Actualizar Material del Curso (Sincronización) 🔄
+| Pregunta | Respuesta |
+|---|---|
+| **¿Dónde?** | En la Terminal de VS Code (**Carpeta Raíz**). |
+| **¿Qué?** | Traer las nuevas carpetas (S8, S9, etc.) desde el repositorio del profesor. |
+| **¿Cuándo?** | **Al inicio de cada nueva sesión**. |
+| **¿Por qué?** | Para tener los laboratorios nuevos sin borrar tus bases de datos o scripts de sesiones anteriores. |
+
+**Instrucción:**
+1.  **Vincular con el profesor (Solo una vez):** Si nunca lo has hecho, dile a Git quién es el profesor:
+    ```bash
+    git remote add upstream https://github.com/edwardzd/SQL_NovaMarket.git
+    ```
+2.  **Traer lo nuevo:** Ejecuta estos dos comandos para descargar las carpetas nuevas y fusionarlas con las tuyas:
+    ```bash
+    git fetch upstream
+    git merge upstream/main
+    ```
+    > **💡 ¿Qué acabas de hacer?**
+    > *   **`fetch`**: Es como ir a la biblioteca del profesor y sacar una **fotocopia** de lo nuevo. Se guarda en un cajón secreto de tu PC sin tocar tus archivos.
+    > *   **`merge`**: Es el acto de **pegar esa fotocopia** en tu cuaderno. Git añade las carpetas nuevas (S8, S9) sin borrar tu trabajo de la S6 y S7.
+
+3.  **En caso de conflictos (Opción quirúrgica):** Si el paso anterior falla o no quieres pelear con Git, usa este comando para traer **solo** la carpeta de la sesión actual (ej: Sesión 8 y 9):
+    ```bash
+    git checkout upstream/main -- 03_Sesion_08_09/
+    ```
+    > **💡 ¿Qué significa este comando?**
+    > Es como entrar a la oficina del profesor y pedirle que te deje copiar **solo una carpeta específica** del semestre, ignorando todo el resto del repositorio. Es la opción más segura si tu Git está dando errores.
+
+---
+*Configuración de Entorno | NovaMarket Tech | Guía de Sincronización*
