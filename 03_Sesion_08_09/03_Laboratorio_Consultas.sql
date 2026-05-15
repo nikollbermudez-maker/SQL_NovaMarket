@@ -19,24 +19,17 @@ SELECT CiudadID,
     COUNT(*) AS Filas
 FROM FactVentas
 GROUP BY CiudadID;
+--Respuesta paso 1:
+--Veo dos columnas (ciudad ID y filas) y hay 6 filas una para cada ciudad y se ha agrupado
+--el numero de registros por cada ciudad 
 -- Paso 2: El veredicto de Leticia con GROUP BY (Usando IDs)
-SELECT CiudadID,
-    COUNT(*) AS Transacciones,
-    ROUND(
-        SUM(Precio_Venta * Cantidad * (1 - Descuento_Pct)),
-        2
-    ) AS Venta_Neta,
-    ROUND(SUM(Costo_Envio), 2) AS Costo_Envio_Total,
-    ROUND(
-        SUM(
-            Precio_Venta * Cantidad * (1 - Descuento_Pct) - Costo_Envio
-        ),
-        2
-    ) AS Margen_Aproximado
-FROM FactVentas
-GROUP BY CiudadID
-ORDER BY Margen_Aproximado ASC;
+-- Respuesta Paso 2:
+-- Ninguna tiene un Margen_Aproximado negativo, pero el ID 2 (Leticia) es el más bajo con 134,920.0
+-- Este bajo margen coincide con lo observado en Power BI.
 -- Paso 3: SUM vs AVG
+-- Respuesta Paso 3:
+-- Usaría SUM, porque muestra el impacto real del costo total.
+-- AVG oculta el problema de que el alto volumen hace el costo total elevadísimo.
 SELECT CiudadID,
     ROUND(SUM(Costo_Envio), 2) AS Costo_TOTAL,
     ROUND(AVG(Costo_Envio), 2) AS Costo_PROMEDIO
@@ -45,6 +38,9 @@ WHERE CiudadID = 6
 GROUP BY CiudadID;
 -- ══ PARTE 2 — JOIN (Nombres Reales) ════════════════════════════
 -- Paso 4: El primer JOIN: 'Leticia' en lugar de '6'
+-- Respuesta Paso 4:
+-- La columna que une las tablas es `CiudadID`.
+-- Aparece 'Leticia' porque el JOIN trajo el nombre de la ciudad desde la tabla DimCiudad.
 SELECT f.TransaccionID,
     c.Ciudad AS Ciudad,
     -- viene de DimCiudad
@@ -86,6 +82,9 @@ ORDER BY c.Ciudad ASC,
     Venta_Neta DESC;
 -- ══ LA CONSULTA MAESTRA (JOIN + GROUP BY) ══════════════════════
 -- Reproduciendo el dashboard de S4
+-- Respuesta Consulta Maestra:
+-- Leticia no tiene pérdida (negativo) sino el margen más bajo: 134,920.0.
+-- Esto coincide exactamente con el dashboard de S4.
 SELECT c.Ciudad AS Ciudad,
     COUNT(*) AS Transacciones,
     ROUND(
@@ -110,11 +109,44 @@ ORDER BY Margen_Aproximado ASC;
 -- Escribe tus consultas debajo de cada enunciado.
 -- ═══════════════════════════════════════════════════════════════
 -- E1: (Fácil) Muestra nombre del producto, categoría y venta neta total de cada producto. Ordena de mayor a menor.
--- [Tu código para E1 aquí]
+SELECT 
+    p.Producto, 
+    p.Categoria, 
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+GROUP BY p.Producto, p.Categoria
+ORDER BY Venta_Neta DESC;
+
 -- E2: (Medio) ¿Cuál producto vendió más en Leticia? Usa JOIN + WHERE + GROUP BY.
--- [Tu código para E2 aquí]
+SELECT 
+    p.Producto,
+    COUNT(*) AS Transacciones,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+WHERE c.Ciudad = 'Leticia'
+GROUP BY p.Producto
+ORDER BY Venta_Neta DESC
+LIMIT 1;
+
 -- E3: (Difícil) Reproduce la tabla del dashboard de S4 completa: Ciudad, Ventas, Utilidad, Margen%. Con nombres reales.
--- [Tu código para E3 aquí]
+SELECT
+    c.Ciudad AS Ciudad,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Ventas,
+    ROUND(SUM(
+        f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)
+        - f.Costo_Envio
+    ), 2) AS Utilidad,
+    ROUND(
+        SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct) - f.Costo_Envio) / 
+        SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)) * 100
+    , 2) AS Margen_Porcentaje
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+GROUP BY c.Ciudad
+ORDER BY Margen_Porcentaje ASC;
 -- ═══════════════════════════════════════════════════════════════
 -- ¡Fin de la Unidad 2! Prepárate para Python en la Unidad 3.
 -- ═══════════════════════════════════════════════════════════════

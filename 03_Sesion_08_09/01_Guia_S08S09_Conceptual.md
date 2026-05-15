@@ -78,7 +78,7 @@ SELECT CiudadID, COUNT(*) AS Filas FROM FactVentas GROUP BY CiudadID;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Cuántas filas retorna GROUP BY? ¿Por qué? | |
+| ¿Cuántas filas retorna GROUP BY? ¿Por qué? | 6 filas. Porque agrupa las 500 ventas en las 6 ciudades únicas. |
 
 ### Paso 2 — El veredicto de Leticia con GROUP BY
 
@@ -99,9 +99,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué CiudadID tiene Margen_Aproximado negativo? | |
-| ¿Cuánto es esa pérdida? | |
-| ¿Coincide con el número de Power BI de S4? | SÍ / NO |
+| ¿Qué CiudadID tiene Margen_Aproximado negativo? | Ninguna, pero el ID 2 (Leticia) es el más bajo. |
+| ¿Cuánto es esa pérdida? | No hay pérdida, el margen es 134,920.0 |
+| ¿Coincide con el número de Power BI de S4? | SÍ |
 
 ### Paso 3 — SUM vs AVG: el mismo debate de S2
 
@@ -117,7 +117,7 @@ GROUP BY CiudadID;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Para decidir si cerrar Leticia, cuál usarías: SUM o AVG? | |
+| ¿Para decidir si cerrar Leticia, cuál usarías: SUM o AVG? | SUM, porque muestra el impacto real del costo total, mientras que AVG oculta el problema del alto volumen. |
 
 ---
 
@@ -138,8 +138,8 @@ LIMIT 5;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué columna une las dos tablas? | |
-| ¿Por qué ahora aparece 'Leticia' y no '6'? | |
+| ¿Qué columna une las dos tablas? | `CiudadID` |
+| ¿Por qué ahora aparece 'Leticia' y no '6'? | Porque usamos INNER JOIN para buscar el nombre en la tabla DimCiudad. |
 
 ### Paso 5 — Doble JOIN: ciudad Y producto
 
@@ -180,9 +180,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | SÍ / NO |
-| ¿Cuánto es esa pérdida? | |
-| ¿Coincide este resultado con el dashboard de Power BI de S4? | |
+| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | NO (Aparece como el menor, pero positivo) |
+| ¿Cuánto es esa pérdida? | No hay pérdida, el margen es 134,920.0 |
+| ¿Coincide este resultado con el dashboard de Power BI de S4? | SÍ, coincide con los bajos márgenes de Leticia. |
 
 ---
 
@@ -192,14 +192,31 @@ ORDER BY Margen_Aproximado ASC;
 Muestra nombre del producto, categoría y venta neta total de cada producto. Ordena de mayor a menor.
 
 ```sql
--- Tu consulta:
+SELECT 
+    p.Producto, 
+    p.Categoria, 
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+GROUP BY p.Producto, p.Categoria
+ORDER BY Venta_Neta DESC;
 ```
 
 ### Ejercicio 2
 ¿Cuál producto vendió más en Leticia? Usa JOIN + WHERE + GROUP BY.
 
 ```sql
--- Tu consulta:
+SELECT 
+    p.Producto,
+    COUNT(*) AS Transacciones,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Venta_Neta
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+WHERE c.Ciudad = 'Leticia'
+GROUP BY p.Producto
+ORDER BY Venta_Neta DESC
+LIMIT 1;
 ```
 
 ### Ejercicio 3
