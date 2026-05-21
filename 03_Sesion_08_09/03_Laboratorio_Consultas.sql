@@ -24,8 +24,8 @@ GROUP BY CiudadID;
 --el numero de registros por cada ciudad 
 -- Paso 2: El veredicto de Leticia con GROUP BY (Usando IDs)
 -- Respuesta Paso 2:
--- Ninguna tiene un Margen_Aproximado negativo, pero el ID 2 (Leticia) es el más bajo con 134,920.0
--- Este bajo margen coincide con lo observado en Power BI.
+-- Leticia (ID 2) tiene un Margen_Aproximado negativo.
+-- La pérdida es de -131,330.0. Este bajo margen coincide con lo observado en Power BI de la S4.
 -- Paso 3: SUM vs AVG
 -- Respuesta Paso 3:
 -- Usaría SUM, porque muestra el impacto real del costo total.
@@ -83,8 +83,9 @@ ORDER BY c.Ciudad ASC,
 -- ══ LA CONSULTA MAESTRA (JOIN + GROUP BY) ══════════════════════
 -- Reproduciendo el dashboard de S4
 -- Respuesta Consulta Maestra:
--- Leticia no tiene pérdida (negativo) sino el margen más bajo: 134,920.0.
--- Esto coincide exactamente con el dashboard de S4.
+-- SÍ, Leticia aparece con Margen_Aproximado negativo.
+-- La pérdida es de -131,330.0.
+-- SÍ, esto coincide exactamente con el dashboard de Power BI de S4.
 SELECT c.Ciudad AS Ciudad,
     COUNT(*) AS Transacciones,
     ROUND(
@@ -93,10 +94,10 @@ SELECT c.Ciudad AS Ciudad,
         ),
         2
     ) AS Venta_Neta,
-    ROUND(SUM(f.Costo_Envio), 2) AS Costo_Envio_Total,
+    ROUND(SUM(f.Costo_Envio * f.Cantidad), 2) AS Costo_Envio_Total,
     ROUND(
         SUM(
-            f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio
+            f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - (f.Costo_Envio * f.Cantidad)
         ),
         2
     ) AS Margen_Aproximado
@@ -137,10 +138,10 @@ SELECT
     ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Ventas,
     ROUND(SUM(
         f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)
-        - f.Costo_Envio
+        - (f.Costo_Envio * f.Cantidad)
     ), 2) AS Utilidad,
     ROUND(
-        SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct) - f.Costo_Envio) / 
+        SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct) - (f.Costo_Envio * f.Cantidad)) / 
         SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)) * 100
     , 2) AS Margen_Porcentaje
 FROM FactVentas f

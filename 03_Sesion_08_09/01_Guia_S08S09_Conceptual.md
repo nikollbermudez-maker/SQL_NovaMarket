@@ -87,10 +87,10 @@ SELECT
     CiudadID,
     COUNT(*)                                               AS Transacciones,
     ROUND(SUM(Precio_Venta * Cantidad * (1-Descuento_Pct)), 2) AS Venta_Neta,
-    ROUND(SUM(Costo_Envio), 2)                             AS Costo_Envio_Total,
+    ROUND(SUM(Costo_Envio * Cantidad), 2)                             AS Costo_Envio_Total,
     ROUND(SUM(
         Precio_Venta * Cantidad * (1-Descuento_Pct)
-        - Costo_Envio
+        - (Costo_Envio * Cantidad)
     ), 2)                                                  AS Margen_Aproximado
 FROM FactVentas
 GROUP BY CiudadID
@@ -99,9 +99,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué CiudadID tiene Margen_Aproximado negativo? | Ninguna, pero el ID 2 (Leticia) es el más bajo. |
-| ¿Cuánto es esa pérdida? | No hay pérdida, el margen es 134,920.0 |
-| ¿Coincide con el número de Power BI de S4? | SÍ |
+| ¿Qué CiudadID tiene Margen_Aproximado negativo? | El ID 2 (Leticia) tiene margen negativo. |
+| ¿Cuánto es esa pérdida? | La pérdida es de -131,330.0 |
+| ¿Coincide con el número de Power BI de S4? | SÍ, coincide exactamente con la S4. |
 
 ### Paso 3 — SUM vs AVG: el mismo debate de S2
 
@@ -167,10 +167,10 @@ SELECT
     c.Ciudad                                               AS Ciudad,
     COUNT(*)                                               AS Transacciones,
     ROUND(SUM(f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)), 2) AS Venta_Neta,
-    ROUND(SUM(f.Costo_Envio), 2)                           AS Costo_Envio_Total,
+    ROUND(SUM(f.Costo_Envio * f.Cantidad), 2)                           AS Costo_Envio_Total,
     ROUND(SUM(
         f.Precio_Venta * f.Cantidad * (1-f.Descuento_Pct)
-        - f.Costo_Envio
+        - (f.Costo_Envio * f.Cantidad)
     ), 2)                                                  AS Margen_Aproximado
 FROM FactVentas f
 INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
@@ -180,9 +180,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | NO (Aparece como el menor, pero positivo) |
-| ¿Cuánto es esa pérdida? | No hay pérdida, el margen es 134,920.0 |
-| ¿Coincide este resultado con el dashboard de Power BI de S4? | SÍ, coincide con los bajos márgenes de Leticia. |
+| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | SÍ, ahora aparece con margen negativo. |
+| ¿Cuánto es esa pérdida? | La pérdida es de -131,330.0 |
+| ¿Coincide este resultado con el dashboard de Power BI de S4? | SÍ, coincide con la pérdida observada en Power BI. |
 
 ---
 
